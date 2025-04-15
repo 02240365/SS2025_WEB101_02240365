@@ -1,43 +1,105 @@
-'use client';
+"use client";
+
+import { useState, useEffect } from 'react';
 import VideoCard from './VideoCard';
+import { getVideos } from '../../services/videoService';
+import toast from 'react-hot-toast';
 
-// Sample data for our feed
-const DUMMY_POSTS = [
-    {
-        id: '1',
-        username: '@user1',
-        caption: 'Check out this cool video! #trending #tiktok #viral',
-        audio: 'Original Sound - User1',
-        likes: 1234,
-        comments: 432,
-        shares: 89
-    },
-    {
-        id: '2',
-        username: '@user2',
-        caption: 'Learning to dance & #dance #fun #trending',
-        audio: 'Popular Song - Artist',
-        likes: 5678,
-        comments: 321,
-        shares: 52
-    },
-    {
-        id: '3',
-        username: '@user3',
-        caption: 'Beautiful sunset today! #nature #sunset #vibes',
-        audio: 'Sunset Vibes - Chill Music',
-        likes: 2468,
-        comments: 135,
-        shares: 46
+const VideoFeed = ({ feedType = 'forYou' }) => { // Add default value
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchVideos = async () => {
+    try {
+      setLoading(true);
+      let response;
+      
+      // Use different API endpoints based on feed type
+      if (feedType === 'following') {
+        response = await getFollowingVideos();
+      } else {
+        response = await getVideos();
+      }
+      
+      setVideos(response.videos || []);
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      setError('Failed to load videos. Please try again later.');
+      toast.error('Failed to load videos');
+    } finally {
+      setLoading(false);
     }
-];
+  };
 
-export default function VideoFeed() {
+  useEffect(() => {
+    fetchVideos();
+  }, [feedType]); 
+// const VideoFeed = () => {
+//   const [videos, setVideos] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   fetchVideos();
+  // }, []);
+
+  // const fetchVideos = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const data = await getVideos();
+  //     setVideos(data.videos || []);
+  //   } catch (error) {
+  //     console.error('Error fetching videos:', error);
+  //     setError('Failed to load videos. Please try again later.');
+  //     toast.error('Failed to load videos');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+  if (loading) {
     return (
-        <div className="max-w-[550px] mx-auto">
-            {DUMMY_POSTS.map((post) => (
-                <VideoCard key={post.id} post={post} />
-            ))}
-        </div>
+      <div className="flex justify-center py-10">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
+      </div>
     );
-}
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-red-500">{error}</p>
+        <button
+          onClick={fetchVideos}
+          className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  if (videos.length === 0) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-gray-500">No videos found.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-10">
+      {videos.map((video) => (
+        <VideoCard key={video.id} video={video} />
+      ))}
+    </div>
+  );
+};
+
+export default VideoFeed;
+
+
+
+

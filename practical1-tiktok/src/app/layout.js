@@ -1,22 +1,23 @@
-import { Inter } from 'next/font/google';
-import './globals.css';
-import MainLayout from '@/components/layout/MainLayout';
 
-const inter = Inter({ subsets: ['latin'] });
+import { AuthProvider } from '../contexts/authContext';
+import { Toaster } from 'react-hot-toast';
+import './globals.css';
+import MainLayout from '../components/layout/MainLayout';
 
 export const metadata = {
-    title: 'TikTok Clone',
-    description: 'A TikTok clone built with Next.js',
+  title: 'TikTok',
+  description: 'A TikTok built with Next.js and Express',
 };
 
 export default function RootLayout({ children }) {
-    return (
-        <html lang="en">
-            <body className={inter.className}>
-                <MainLayout>
-                    {children}
-                </MainLayout>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body>
+        <AuthProvider>
+          <Toaster position="top-center" />
+          <MainLayout>{children}</MainLayout>
+        </AuthProvider>
+      </body>
+    </html>
+  );
 }
