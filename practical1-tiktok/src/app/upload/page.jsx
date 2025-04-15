@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/authContext';
 import toast from 'react-hot-toast';
 import { FaCloudUploadAlt, FaSpinner } from 'react-icons/fa';
-import apiClient from '../../lib/api-config.js.js';
+import apiClient from '../../lib/api-config.js';
 
 const UploadPage = () => {
   const { isAuthenticated } = useAuth();

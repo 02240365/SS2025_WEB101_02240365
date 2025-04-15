@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import apiClient from '../../lib/api-config.js.js';
+import apiClient from '../../lib/api-config.js';
 import Link from 'next/link';
-import { useAuth } from '../../contexts/authContext.js';
+import { getAllUsers, followUser, unfollowUser } from '../../services/userService.js';
+import { useAuth } from '../../contexts/authContext';
 import toast from 'react-hot-toast';
 import { FaUserPlus, FaUserCheck } from 'react-icons/fa';
 

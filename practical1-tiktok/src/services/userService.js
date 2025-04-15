@@ -10,20 +10,13 @@ export const getUserById = async (userId) => {
   }
 };
 
-export const updateUser = async (userId, userData) => {
+export const updateUser = async (userId, formData) => {
   try {
-    let config = {};
-    
-    // If userData is FormData, set the right headers
-    if (userData instanceof FormData) {
-      config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-    }
-    
-    const response = await apiClient.put(`/users/${userId}`, userData, config);
+    const response = await apiClient.put(`/users/${userId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Important for file uploads
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error updating user ${userId}:`, error);
@@ -33,7 +26,8 @@ export const updateUser = async (userId, userData) => {
 
 export const followUser = async (userId) => {
   try {
-    const response = await apiClient.post(`/users/${userId}/followers`);
+    console.log(`Following user ${userId}`);
+    const response = await apiClient.post(`/users/${userId}/follow`);
     return response.data;
   } catch (error) {
     console.error(`Error following user ${userId}:`, error);
@@ -43,7 +37,8 @@ export const followUser = async (userId) => {
 
 export const unfollowUser = async (userId) => {
   try {
-    const response = await apiClient.delete(`/users/${userId}/followers`);
+    console.log(`Unfollowing user ${userId}`);
+    const response = await apiClient.delete(`/users/${userId}/follow`);
     return response.data;
   } catch (error) {
     console.error(`Error unfollowing user ${userId}:`, error);
