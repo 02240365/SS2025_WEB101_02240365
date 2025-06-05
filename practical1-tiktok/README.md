@@ -1,4 +1,4 @@
-# Practical1 - TiktokClone
+# Practical 1: Tiktok Clone 
 
 A TikTok-inspired web application built with Next.js, React, and Tailwind CSS. This project demonstrates modern web development practices including component-based architecture, form handling, and responsive design.
 

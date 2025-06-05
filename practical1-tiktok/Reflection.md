@@ -1,4 +1,6 @@
-# Practical1 - TiktokClone Reflection
+# Practical 1: Tiktok Clone Reflection
+
+## Documentation 
 
 ### Main Concepts Applied
 
