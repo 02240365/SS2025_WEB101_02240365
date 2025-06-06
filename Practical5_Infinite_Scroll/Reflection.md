@@ -77,9 +77,6 @@ This practical reinforced the importance of:
 #### Challenge 1: Understanding Cursor-Based Pagination Logic
 **Problem**: Initially confused about how cursors work compared to page numbers.
 
-**Screenshot Description**: 
-*Error showing "Cannot read property 'id' of undefined" when trying to access cursor*
-
 **Solution**:
 - Drew diagrams to visualize how cursors point to specific records
 - Implemented the n+1 pattern step by step
@@ -98,9 +95,6 @@ console.log('Next cursor will be:', videos[videos.length - 1]?.id);
 
 **Problem**: The infinite scroll wasn't loading more content when reaching the bottom.
 
-**Screenshot Description**:
-*Browser DevTools showing the observer element but no intersection events firing*
-
 **Solution**:
 
 - Added `rootMargin: '100px'` to trigger loading before reaching exact bottom
@@ -114,9 +108,6 @@ console.log('Next cursor will be:', videos[videos.length - 1]?.id);
 #### Challenge 3: Duplicate Videos Appearing
 
 **Problem**: Sometimes the same videos would appear multiple times in the feed.
-
-**Screenshot Description**:
-*Feed showing the same video repeated with identical IDs in React DevTools*
 
 **Solution**:
 
@@ -150,9 +141,6 @@ console.log('Next cursor will be:', videos[videos.length - 1]?.id);
 #### Challenge 5: React Query Configuration
 
 **Problem**: Data was refetching too frequently, causing poor performance.
-
-**Screenshot Description**:
-*Network tab showing excessive API calls every few seconds*
 
 **Solution**:
 
